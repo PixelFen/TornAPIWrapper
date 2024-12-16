@@ -157,6 +157,12 @@ class KeyPaused(Exception):  # 18
     """
     pass
 
+class OtherError(Exception):
+    """
+    There is some error that likely isn't related to the API.
+    """
+    pass
+
 
 class errored:
     def handler(self, response) -> dict:
@@ -183,7 +189,7 @@ class errored:
                 raise TooManyRequests("Requests are blocked for a small period of time because of too many requests per user (max 100 per minute).")
             
             elif error_code == 6:
-                raise InvalidID("Wrong ID value.")
+                raise IncorrectID("Wrong ID value.")
             
             elif error_code == 7:
                 raise InvalidIDRelation("A requested selection is private (For example, personal data of another user / faction).")
@@ -223,5 +229,6 @@ class errored:
             
             
             else:
-                print(data)
+                raise OtherError("Unhandled error, shouldn't occur.")
+            
         return data
