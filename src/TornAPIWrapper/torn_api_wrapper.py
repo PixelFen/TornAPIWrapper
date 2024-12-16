@@ -24,7 +24,7 @@ SOFTWARE.
 
 import requests
 from typing import Union, List, Dict
-from .torn_api_error_handler import TornApiErrorHandler
+from .errors import errored
 
 class TornApiWrapper:
     """
@@ -49,7 +49,7 @@ class TornApiWrapper:
     def __init__(self, api_key):
         self.api_key = api_key
         self.api_comment = None
-        self.api_error_handler = TornApiErrorHandler().api_error_handler
+        self.api_error_handler = errored().handler
 
     def api_request(self, endpoint: str, input_id: int = None, selections: List[str] = None, limit: int = None, sort: str = None, stat: str = None, cat: int = None, log: int = None, from_unix: int = None, to_unix: int = None, unix_timestamp: int = None) -> dict:
         """
